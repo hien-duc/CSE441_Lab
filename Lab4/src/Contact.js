@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchContactsSuccess } from './Store';
@@ -6,33 +6,36 @@ import ContactListItem from './ContactListItem';
 
 const keyExtractor = ({ phone }) => phone;
 
-const fetchContacts = async () => {
-  const data = await fetch('https://randomuser.me/api/?results=50');
-  const ContactData = await data.json();
-  return ContactData.results.map(Contacts);
-};
-
 const Contacts = ({ navigation }) => {
-  const contacts = useSelector(state => state.contacts);
+  const [contacts, setContacts] = useState([]);
   const dispatch = useDispatch();
+  const contactsUrl = 'https://randomuser.me/api/?results=50';
 
   useEffect(() => {
-    fetchContacts()
-      .then(contacts => {
-        console.log(contacts); // Check if contacts are fetched
-        dispatch(fetchContactsSuccess(contacts));
+    console.log("Fetching contact data...");
+    fetch(contactsUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response is not OK');
+        }
+        return response.json();
       })
-      .catch(e => {
-        console.error(e); // Log any error in fetching contacts
+      .then(d => {
+        console.log("Data fetched successfully:", d.results.length);
+        setContacts(d.results);
+        dispatch(fetchContactsSuccess(d.results));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
       });
   }, [dispatch]);
 
   const renderContacts = ({ item }) => {
-    const { name, avatar, phone } = item;
+    const { name, picture, phone } = item;
     return (
       <ContactListItem
-        name={name}
-        avatar={avatar}
+        name={`${name.first} ${name.last}`}
+        avatar={picture.thumbnail}
         phone={phone}
         onPress={() => navigation.navigate('ProfileContact', { contact: item })}
       />

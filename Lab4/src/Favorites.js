@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+/* import 'react-native-gesture-handler'; */
 import { useSelector } from 'react-redux';
 import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';

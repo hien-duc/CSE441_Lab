@@ -1,5 +1,4 @@
-
-import 'react-native-gesture-handler';
+/* import 'react-native-gesture-handler'; */
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
