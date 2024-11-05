@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchContactsSuccess } from './ContactsSlice';
+import { fetchContactsSuccess } from './Store';
 import ContactListItem from './ContactListItem';
 
 const keyExtractor = ({ phone }) => phone;

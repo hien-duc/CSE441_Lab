@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { v4 } from 'uuid';
+import { v4 as uuid} from 'uuid';
 
 export const mapContacts = contact => {
   const { name, picture, phone, cell, email } = contact;
@@ -30,3 +30,4 @@ const Store = configureStore({
   reducer: contactsSlice.reducer,
 });
 export default Store;
+
