@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchContactsSuccess } from './contactsSlice';
+import { fetchContactsSuccess } from './ContactsSlice';
 import ContactListItem from './ContactListItem';
 
 const keyExtractor = ({ phone }) => phone;
@@ -19,6 +19,7 @@ const Contacts = ({ navigation }) => {
   useEffect(() => {
     fetchContacts()
       .then(contacts => {
+        console.log(contacts); // Check if contacts are fetched
         dispatch(fetchContactsSuccess(contacts));
       })
       .catch(e => {

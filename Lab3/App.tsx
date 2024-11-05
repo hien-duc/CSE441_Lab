@@ -5,13 +5,20 @@ import ProductSearch from './src/Product_Search';
 import ProductDetail from './src/Product_Detail';
 import {BottomNavigation} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Icon} from 'react-native-elements';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faFolder,
+  faPlus,
+  faSearch,
+  faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import {StyleSheet, View} from 'react-native';
 
 type RouteType = {
   key: string;
   title: string;
-  focusedIcon: string;
-  unfocusedIcon: string;
+  focusedIcon: any; // Use any for FontAwesomeIcon
+  unfocusedIcon: any;
 };
 
 const App: React.FC = () => {
@@ -21,26 +28,26 @@ const App: React.FC = () => {
     {
       key: 'productList',
       title: 'Products',
-      focusedIcon: 'folder',
-      unfocusedIcon: 'folder-outline',
+      focusedIcon: faFolder,
+      unfocusedIcon: faFolder,
     },
     {
       key: 'productAdd',
       title: 'Add',
-      focusedIcon: 'add',
-      unfocusedIcon: 'add-circle-outline',
+      focusedIcon: faPlus,
+      unfocusedIcon: faPlus,
     },
     {
       key: 'productSearch',
       title: 'Search',
-      focusedIcon: 'search',
-      unfocusedIcon: 'search-off',
+      focusedIcon: faSearch,
+      unfocusedIcon: faSearch,
     },
     {
       key: 'productDetail',
       title: 'Detail',
-      focusedIcon: 'info',
-      unfocusedIcon: 'info-outline',
+      focusedIcon: faInfoCircle,
+      unfocusedIcon: faInfoCircle,
     },
   ];
 
@@ -58,12 +65,9 @@ const App: React.FC = () => {
     route: RouteType;
     focused: boolean;
   }) => {
-    const iconName = focused ? route.focusedIcon : route.unfocusedIcon;
-
     return (
-      <Icon
-        name={iconName}
-        type="material"
+      <FontAwesomeIcon
+        icon={focused ? route.focusedIcon : route.unfocusedIcon}
         size={24}
         color={focused ? 'blue' : 'gray'}
       />
@@ -72,16 +76,24 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaProvider>
-      <BottomNavigation
-        navigationState={{index, routes}}
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-        renderIcon={renderIcon}
-        shifting={true}
-        style={{zIndex: 1}}
-      />
+      <View style={styles.container}>
+        <BottomNavigation
+          navigationState={{index, routes}}
+          onIndexChange={setIndex}
+          renderScene={renderScene}
+          renderIcon={renderIcon}
+          shifting={true}
+          style={{zIndex: 1}}
+        />
+      </View>
     </SafeAreaProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;

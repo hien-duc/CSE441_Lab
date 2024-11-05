@@ -131,14 +131,12 @@ export default function AddProduct() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
         backgroundColor: '#fff',
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#007AFF',
-        marginBottom: 20,
+        color: '#007AFF',   
         textAlign: 'center',
     },
     label: {

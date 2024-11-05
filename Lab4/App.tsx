@@ -59,8 +59,9 @@ const TabNavigator = () => {
       initialRouteName="ContactsScreens"
       barStyle={{backgroundColor: 'blue'}}
       labeled={false}
-      activeColor={'greyLight'}
-      inactiveColor={'greyDark'}>
+      activeColor={'#D3D3D3'}
+      inactiveColor={'#A9A9A9'}
+    >
       <Tab.Screen
         name="Contacts"
         component={ContactsScreens}
