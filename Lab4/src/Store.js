@@ -1,33 +1,34 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuid} from 'uuid';
-
-export const mapContacts = contact => {
-  const { name, picture, phone, cell, email } = contact;
-  return {
-    id: v4(),
-    name: name.first + '' + name.last,
-    avatar: picture.large,
-    phone,
-    cell,
-    email,
-    favorite: Math.random() < 0.1 ? true : false,
-  };
-};
 
 const contactsSlice = createSlice({
-  name: 'contacts',
-  initialState: {
-    contacts: [],
-  },
-  reducers: {
-    fetchContactsSuccess: (state, action) => {
-      state.contacts = action.payload;
+    name: 'contacts',
+    initialState: {
+        contacts: [],
+        favorites: []
     },
-  },
-});
-export const { fetchContactsSuccess } = contactsSlice.actions;
-const Store = configureStore({
-  reducer: contactsSlice.reducer,
-});
-export default Store;
+    reducers: {
+        setContacts: (state, action) => {
+            state.contacts = action.payload;
+        },
+        toggleFavorite: (state, action) => {
+            const contact = action.payload;
+            const isFavorite = state.favorites.some(fav => fav.login.uuid === contact.login.uuid);
 
+            if (isFavorite) {
+                state.favorites = state.favorites.filter(fav => fav.login.uuid !== contact.login.uuid);
+            } else {
+                state.favorites.push(contact);
+            }
+        }
+    }
+});
+
+export const { setContacts, toggleFavorite } = contactsSlice.actions;
+
+const store = configureStore({
+    reducer: {
+        contacts: contactsSlice.reducer
+    }
+});
+
+export default store;
